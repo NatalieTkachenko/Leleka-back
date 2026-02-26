@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
@@ -5,16 +6,20 @@ import 'dotenv/config';
 
 import { connectMongoDB } from './db/connectMongoDB.js';
 
-import weeksRoutes from './routes/weeksRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+
 import usersRoutes from './routes/usersRoutes.js';
 import tasksRouter from './routes/tasksRoutes.js';
+import diariesRouts from './routes/diariesRouts.js';
+import weeksRoutes from './routes/weeksRoutes.js';
 
 const app = express();
-const PORT = process.env.PORT ?? 3030;
+const PORT = process.env.PORT ?? 3000;
 
 /* ========= Middleware ========= */
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 app.use(
   pino({
     transport: {
@@ -29,35 +34,33 @@ app.use(
 );
 
 /* ========= Routes ========= */
-
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    service: 'Stork-Helpers API',
-  });
-});
-
-app.use('/api', weeksRoutes);
+app.use('/api', authRoutes);
 app.use('/api', usersRoutes);
+app.use('/api', tasksRouter);
+app.use('/api', diariesRouts);
+app.use('/api', weeksRoutes);
 
-app.use('/api/tasks', tasksRouter);
+// app.get('/api/health', (req, res) => {
+//   res.json({
+//     status: 'ok',
+//     service: 'Stork-Helpers API',
+//   });
+// });
+
+// app.use('/api', weeksRoutes);
+
+// app.use('/api/tasks', tasksRouter);
 
 /* ========= 404 ========= */
 app.use((req, res) => {
-  res.status(404).json({
-    message: 'Маршрут не знайдено',
-  });
+  res.status(404).json({ message: 'Not found route' });
 });
-
 /* ========= Error handler ========= */
 app.use((err, req, res, next) => {
-  console.error(err);
-
+  console.error('Error:', err.message);
   res.status(500).json({
-    message:
-      process.env.NODE_ENV === 'production'
-        ? 'Сталася помилка сервера'
-        : err.message,
+    message: 'Internal Server Error',
+    error: err.message,
   });
 });
 
