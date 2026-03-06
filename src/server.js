@@ -16,23 +16,27 @@ import weeksRoutes from './routes/weeksRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
+const isDev = process.env.NODE_ENV !== 'production';
 
 /* ========= Middleware ========= */
 app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cors());
 app.use(cookieParser());
+
 app.use(
-  pino({
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-        translateTime: 'HH:MM:ss',
-        ignore: 'pid,hostname',
-      },
-    },
-  }),
+  isDev
+    ? pino({
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            translateTime: 'HH:MM:ss',
+            ignore: 'pid,hostname',
+          },
+        },
+      })
+    : pino(),
 );
 
 /* ========= Routes ========= */
