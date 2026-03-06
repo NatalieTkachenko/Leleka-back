@@ -3,7 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
 import 'dotenv/config';
-
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './docs/swagger.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 
 import authRoutes from './routes/authRoutes.js';
@@ -18,6 +19,7 @@ const PORT = process.env.PORT ?? 3000;
 
 /* ========= Middleware ========= */
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cors());
 app.use(cookieParser());
 app.use(

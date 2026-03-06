@@ -13,7 +13,7 @@ export const registerUser = async (req, res, next) => {
   const isExistingUser = await User.findOne({ email });
   if (isExistingUser) {
     throw createHttpError(
-      400,
+      409,
       `Email ${email} is already in use. Please use another`,
     );
   }
@@ -50,7 +50,7 @@ export const loginUser = async (req, res, next) => {
   const newSession = await createSession(isValidUser._id);
   setSessionCookies(res, newSession);
 
-  res.status(201).json(isValidUser);
+  res.status(200).json(isValidUser);
 };
 
 export const refreshUserSession = async (req, res) => {
