@@ -1,10 +1,8 @@
-
 # Leleka API
 
-API for pregnancy tracker application. The project provides REST endpoints for managing users and pregnancy-related data.  
- 
-It is built as a learning project to practice backend architecture, API design, and database integration.
+API for pregnancy tracker application. The project provides REST endpoints for managing users and pregnancy-related data.
 
+It is built as a learning project to practice backend architecture, API design, and database integration.
 
 ## Features
 
@@ -14,13 +12,11 @@ It is built as a learning project to practice backend architecture, API design, 
 - MongoDB integration
 - API documentation with Swagger
 
-
 ## Tech Stack
 
 **Server:** Node, Express
 
 **DB:** MongoDB
-
 
 ## Installation
 
@@ -32,17 +28,14 @@ cd Leleka-back
 npm i
 npm run dev
 ```
-    
+
 ## Documentation
 
-Swagger documentation is available at /api-docs
-
-
-
+Swagger documentation is available at [Leleka API docs](https://leleka-back.vercel.app/api/docs/)
 
 ## About Me
+
 Author: Nataliia Tkachenko
 Early-career Fullstack Developer (Node.js / React / Next.js)
 
 https://github.com/NatalieTkachenko
-
