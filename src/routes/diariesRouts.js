@@ -18,6 +18,16 @@ router.post(
   createDiaryNote,
 );
 
+/**
+ * @swagger
+ *
+ * /diaries/all:
+ *   get:
+ *    summary:
+ *    description:
+ *    responses:
+ */
+
 router.get('/diaries/all', authenticate, getNotes);
 
 router.delete('/diaries/:noteId', authenticate, deleteNote);

@@ -20,10 +20,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 
 /* ========= Middleware ========= */
 app.use(express.json());
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.get('/swagger.json', (req, res) => {
-  res.json(swaggerSpec);
-});
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(cors());
 app.use(cookieParser());

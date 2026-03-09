@@ -260,8 +260,30 @@ router.post('/auth/login', celebrate(loginUserValidationSchema), loginUser);
  *                  value:
  *                    message: refresh token is expired
  */
+
 router.post('/auth/refresh', authenticate, refreshUserSession);
+
+/**
+ * @swagger
+ *
+ * /auth/logout:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Logout
+ *     description: Deletes the current session by session id and clears authentication cookies
+ *     responses:
+ *       204:
+ *         description: User has been logged out
+ *         headers:
+ *           Set-Cookie:
+ *             description: Clears authentication cookies.
+ *             schema:
+ *               type: string
+ *
+ */
+
 router.post('/auth/logout', authenticate, logoutUser);
+
 // router.post(
 //   '/auth/request-reset-email',
 //   celebrate(RequestResetEmailSchema),
